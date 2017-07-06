@@ -16,7 +16,7 @@ import com.bravesoft.android_develop.apputil.netutil.NetBroadCastReceiver;
 public abstract class BaseFragment extends Fragment implements View.OnClickListener {
         private Context context;
         protected View rootView;
-    private NetBroadCastReceiver netBroadCastReceiver;
+        public NetBroadCastReceiver netBroadCastReceiver;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

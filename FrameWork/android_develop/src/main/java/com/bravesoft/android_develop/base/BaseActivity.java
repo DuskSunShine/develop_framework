@@ -17,7 +17,7 @@ import com.bravesoft.android_develop.apputil.netutil.NetBroadCastReceiver;
  */
 
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
-    private NetBroadCastReceiver netBroadCastReceiver;
+    public NetBroadCastReceiver netBroadCastReceiver;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
