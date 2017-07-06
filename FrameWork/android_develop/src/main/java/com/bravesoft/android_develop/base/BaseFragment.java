@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bravesoft.android_develop.apputil.netutil.NetBroadCastReceiver;
+
 /**fragment 基类
  * Created by SCY on 2017/7/4 13:38.
  */
@@ -14,7 +16,7 @@ import android.view.ViewGroup;
 public abstract class BaseFragment extends Fragment implements View.OnClickListener {
         private Context context;
         protected View rootView;
-
+    private NetBroadCastReceiver netBroadCastReceiver;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,6 +41,9 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
+            netBroadCastReceiver = new NetBroadCastReceiver();
+            context.registerReceiver(netBroadCastReceiver,
+                    NetBroadCastReceiver.NETWORK_INTENT_FILTER);
             beforeInitView();
             initView(rootView);
             initData();
@@ -82,4 +87,10 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
                 view.setOnClickListener(this);
 
         }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        context.unregisterReceiver(netBroadCastReceiver);
+    }
 }
