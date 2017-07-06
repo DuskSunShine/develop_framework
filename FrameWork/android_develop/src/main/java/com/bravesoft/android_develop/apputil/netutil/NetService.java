@@ -1,5 +1,6 @@
 package com.bravesoft.android_develop.apputil.netutil;
 
+import android.app.ActivityManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -17,8 +18,7 @@ import com.bravesoft.android_develop.apputil.AppUtil;
 public class NetService extends Service {
 
     private Context context;
-    private OnNetChangeListener onNetChangeListener;
-    private static Context serviceContext;
+    public OnNetChangeListener onNetChangeListener;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -29,11 +29,6 @@ public class NetService extends Service {
     public void onCreate() {
         super.onCreate();
         context=getApplicationContext();
-        serviceContext=NetService.this;
-    }
-
-    public static Context getServiceContext() {
-        return serviceContext;
     }
 
     @Override
@@ -59,15 +54,10 @@ public class NetService extends Service {
     public void onDestroy() {
         super.onDestroy();
         stopSelf();
-        serviceContext=null;
     }
     public interface OnNetChangeListener{
         void onNetMobile(int netCode);
         void onNetWifi(int netCode);
         void onNoNetWork(int netCode);
-    }
-    
-    public void SetOnNetChangeListener(OnNetChangeListener onNetChangeListener){
-        this.onNetChangeListener=onNetChangeListener;
     }
 }
