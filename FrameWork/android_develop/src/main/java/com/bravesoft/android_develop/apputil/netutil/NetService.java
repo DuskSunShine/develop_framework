@@ -18,6 +18,7 @@ public class NetService extends Service {
 
     private Context context;
     private OnNetChangeListener onNetChangeListener;
+    private Context serviceContext;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -28,7 +29,11 @@ public class NetService extends Service {
     public void onCreate() {
         super.onCreate();
         context=getApplicationContext();
-        SetOnNetChangeListener(onNetChangeListener);
+        serviceContext=NetService.this;
+    }
+
+    public Context getServiceContext() {
+        return serviceContext;
     }
 
     @Override
