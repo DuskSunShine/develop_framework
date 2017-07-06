@@ -17,6 +17,7 @@ import com.bravesoft.android_develop.apputil.AppUtil;
 public class NetService extends Service {
 
     private Context context;
+    private OnNetChangeListener onNetChangeListener;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -35,11 +36,14 @@ public class NetService extends Service {
             if (NetUtils.isNetConnect(context)){
                 if (NetUtils.getNetWorkState(context)==0){
                     //移动网络
+                    onNetChangeListener.onNetMobile(NetUtils.getNetWorkState(context));
                 }else if (NetUtils.getNetWorkState(context)==1){
                     //WIFI
+                    onNetChangeListener.onNetWifi(NetUtils.getNetWorkState(context));
                 }
             }else {
                 //无网络
+                onNetChangeListener.onNoNetWork(NetUtils.getNetWorkState(context));
             }
         }
         return START_NOT_STICKY;
@@ -49,5 +53,14 @@ public class NetService extends Service {
     public void onDestroy() {
         super.onDestroy();
         stopSelf();
+    }
+    public interface OnNetChangeListener{
+        void onNetMobile(int netCode);
+        void onNetWifi(int netCode);
+        void onNoNetWork(int netCode);
+    }
+    
+    public void SetOnNetChangeListener(OnNetChangeListener onNetChangeListener){
+        this.onNetChangeListener=onNetChangeListener;
     }
 }
