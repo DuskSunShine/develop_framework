@@ -16,19 +16,18 @@ import android.widget.Toast;
 
 public class CustomDialog {
 
-    private OnPositive onPositive;
     /**
      * 没有标题的dialog,按钮为绿色
      * @param context
      * @param msg
      */
-    public static void showMsgDialog(final Context context,String s, String msg){
+    public static void showMsgDialog(final Context context, String s, String msg, final OnDialogClick dialogClick){
         AlertDialog.Builder builder=new AlertDialog.Builder(context);
         builder.setMessage(msg);
         builder.setPositiveButton(s, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
+                dialogClick.onPositiveClick(dialogInterface);
             }
         });
         final AlertDialog alertDialog = builder.create();
@@ -59,13 +58,18 @@ public class CustomDialog {
      * @param mContext
      * @param msg
      */
-    public static void showDialogMessage(Context mContext,String s ,String msg) {
+    public static void showDialogMessage(Context mContext, String s , String msg, final OnDialogClick dialogClick) {
         TextView mTextView = new TextView(mContext);
         mTextView.setGravity(Gravity.CENTER);
         mTextView.setPadding(0, 50, 0, 50);
         mTextView.setText(msg);
         AlertDialog.Builder dialog = new AlertDialog.Builder(mContext)
-                .setCustomTitle(mTextView).setPositiveButton(s, null);
+                .setCustomTitle(mTextView).setPositiveButton(s, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialogClick.onPositiveClick(dialog);
+                    }
+                });
         dialog.create();
         dialog.show();
     }
@@ -77,21 +81,20 @@ public class CustomDialog {
      * @param positive
      * @param msg
      */
-    private void showTowBtnDialog(Context context,String negative,String positive,String msg){
+    private void showTowBtnDialog(Context context, String negative, String positive, String msg, final OnDialogClick dialogClick){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(false);
         builder.setMessage(msg);
         builder.setNegativeButton(negative,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+                       dialogClick.onNegativeClick(dialog);
                     }
                 });
         builder.setPositiveButton(positive, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                onPositive.onPositiveClick(dialogInterface);
-                dialogInterface.dismiss();
+                dialogClick.onPositiveClick(dialogInterface);
 
             }
         });
@@ -115,10 +118,8 @@ public class CustomDialog {
         alertDialog.show();
     }
 
-    public interface OnPositive{
+    public interface OnDialogClick{
         void onPositiveClick(DialogInterface dialogInterface);
-    }
-    public void setOnPositiveClickListener(OnPositive onPositive){
-        this.onPositive=onPositive;
+        void onNegativeClick(DialogInterface dialogInterface);
     }
 }

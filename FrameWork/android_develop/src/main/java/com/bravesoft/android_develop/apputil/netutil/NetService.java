@@ -28,6 +28,7 @@ public class NetService extends Service {
     public void onCreate() {
         super.onCreate();
         context=getApplicationContext();
+        SetOnNetChangeListener(onNetChangeListener);
     }
 
     @Override
