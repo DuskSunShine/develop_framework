@@ -18,7 +18,7 @@ public class NetService extends Service {
 
     private Context context;
     private OnNetChangeListener onNetChangeListener;
-    private Context serviceContext;
+    private static Context serviceContext;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -32,7 +32,7 @@ public class NetService extends Service {
         serviceContext=NetService.this;
     }
 
-    public Context getServiceContext() {
+    public static Context getServiceContext() {
         return serviceContext;
     }
 
@@ -59,6 +59,7 @@ public class NetService extends Service {
     public void onDestroy() {
         super.onDestroy();
         stopSelf();
+        serviceContext=null;
     }
     public interface OnNetChangeListener{
         void onNetMobile(int netCode);
