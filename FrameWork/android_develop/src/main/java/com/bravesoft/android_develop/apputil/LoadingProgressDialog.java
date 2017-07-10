@@ -41,7 +41,7 @@ public class LoadingProgressDialog implements DialogInterface.OnCancelListener {
 
     public void removeDialog() {
         if (mDialog != null && mDialog.isShowing()) {
-            mDialog.cancel();
+            mDialog.dismiss();
         }
     }
 

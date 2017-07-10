@@ -10,14 +10,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import com.bravesoft.android_develop.apputil.AppManager;
-import com.bravesoft.android_develop.apputil.netutil.NetBroadCastReceiver;
 
 /**
  * Created by SCY on 2017/7/4 12:00.
  */
 
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
-    public NetBroadCastReceiver netBroadCastReceiver;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,9 +23,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         setContentView(getContentViewId());
 
         AppManager.getInstance().addActivity(this);
-        netBroadCastReceiver = new NetBroadCastReceiver();
-        registerReceiver(netBroadCastReceiver,
-                NetBroadCastReceiver.NETWORK_INTENT_FILTER);
         // setTranslucentStatus();
         beforeInitView();
         initView();
@@ -153,7 +148,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(netBroadCastReceiver);
         AppManager.getInstance().remove(this);
     }
 }
