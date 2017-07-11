@@ -19,12 +19,13 @@ public class CustomDialog {
     /**
      * 没有标题的dialog,按钮为绿色
      * @param context
-     * @param msg
+     * @param msg 提示消息
+     * @param positiveBtn 按钮文字
      */
-    public static void showMsgDialog(final Context context, String s, String msg, final OnDialogClick dialogClick){
+    public static void showMsgDialog(final Context context, String positiveBtn, String msg, final OnDialogClick dialogClick){
         AlertDialog.Builder builder=new AlertDialog.Builder(context);
         builder.setMessage(msg);
-        builder.setPositiveButton(s, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(positiveBtn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogClick.onPositiveClick(dialogInterface);
@@ -56,15 +57,16 @@ public class CustomDialog {
     /**
      * AlertDialog共用弹出信息,带有自定义标题
      * @param mContext
-     * @param msg
+     * @param msg 提示消息
+     * @param positiveBtn 按钮文字
      */
-    public static void showDialogMessage(Context mContext, String s , String msg, final OnDialogClick dialogClick) {
+    public static void showTitleDialog(Context mContext, String positiveBtn , String msg, final OnDialogClick dialogClick) {
         TextView mTextView = new TextView(mContext);
         mTextView.setGravity(Gravity.CENTER);
         mTextView.setPadding(0, 50, 0, 50);
         mTextView.setText(msg);
         AlertDialog.Builder dialog = new AlertDialog.Builder(mContext)
-                .setCustomTitle(mTextView).setPositiveButton(s, new DialogInterface.OnClickListener() {
+                .setCustomTitle(mTextView).setPositiveButton(positiveBtn, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialogClick.onPositiveClick(dialog);
@@ -77,21 +79,21 @@ public class CustomDialog {
     /**
      *  有两个按钮并且没有标题的dialog
      * @param context
-     * @param negative
-     * @param positive
-     * @param msg
+     * @param negativeBtn 按钮文字
+     * @param positiveBtn 按钮文字
+     * @param msg 提示消息
      */
-    private void showTowBtnDialog(Context context, String negative, String positive, String msg, final OnDialogClick dialogClick){
+    public static void showTowBtnDialog(Context context, String negativeBtn, String positiveBtn, String msg, final OnDialogClick dialogClick){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(false);
         builder.setMessage(msg);
-        builder.setNegativeButton(negative,
+        builder.setNegativeButton(negativeBtn,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                        dialogClick.onNegativeClick(dialog);
                     }
                 });
-        builder.setPositiveButton(positive, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(positiveBtn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogClick.onPositiveClick(dialogInterface);

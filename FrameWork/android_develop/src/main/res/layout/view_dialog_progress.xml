@@ -9,7 +9,8 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:indeterminateDrawable="@drawable/progress_dialog" />
+        android:indeterminateDrawable="@drawable/progress_dialog"
+        android:indeterminateDuration="1000"/>
 
     <TextView
         android:id="@+id/progress_text"
